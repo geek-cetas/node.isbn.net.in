@@ -4,22 +4,22 @@ The library is built using nodejs event emitter. So all the function calls are a
 The library supports only two events as of now.
     * error
     * success
-As the name suggests error is raised if any error occurs in the library and success on a successful operations.
+As the name suggests error is raised if any error occurs in the library and success on a successful operation.
 
 Events:
-    * error : Given a parameter of type 'error' which has code and desc as its attributes
-    * success : Returns a collection of 'Book' objects which have 3 attributes
+    * error : Triggers the callback with a parameter of type 'error' which has code and desc as its attributes
+    * success : Triggers the callback whose parameter is a collection of 'Book' objects. Book has 3 attributes
                 * vendor
                 * price
                 * url
 
 The collection 'Books' support simple operations such as:
-    -> count()    : Returns the number of vendors having this book
+    -> count()    : Returns the number of vendors having the book
     -> cheapest() : Returns the cheapest vendor of all
     -> vendors()  : Returns the list of vendors.
     -> Books['<vendor>'] : Can lookup directly on the class via vendor name.
                             Ex : To look up for flipkart we can do
-                                 Books['flipkart'] or Books.flipkart which returns a Book class.
+                                 Books['flipkart'] or Books.flipkart which returns a Book object.
 
 This library is released under BSD license and feel free to modify and play with it. In case of
 any issues and bugs please mail me at kailashnathreddy@ymail.com. Happy hacking !
