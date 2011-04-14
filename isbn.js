@@ -74,7 +74,6 @@ function parse(data)
     }
     catch(e)
     {
-        console.log(e);
         this.emit('error', e);
     }
 }
@@ -91,11 +90,11 @@ function lookup(isbn)
       if(res.statusCode != 200)
       {
         if(res.statusCode == 404)
-          $.emit('error',
-                      new error(res.statusCode, "Invalid isbn : " + isbn));
+          $.emit('err',
+                     new error(res.statusCode, "Invalid isbn : " + isbn));
         else
-           $.emit('error',
-                      new error(res.statusCode,
+           $.emit('err',
+                    new error(res.statusCode,
                          "Failed fetching the isbn. Http Error"));
         return;
       }
@@ -110,10 +109,6 @@ function lookup(isbn)
 }
 
 lookup.prototype = new emitter;
-lookup.prototype.on = function(str, cb) {
-       this.addListener(str, cb);
-       return this;
- };
 lookup.prototype.__parse = parse;
 
 function search(isbn)

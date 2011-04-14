@@ -2,12 +2,12 @@ This library is a simple interface for isbn.net.in.
 For ex : Please have a look at test.js file.
 The library is built using nodejs event emitter. So all the function calls are asynchronous.
 The library supports only two events as of now.
-    * error
+    * err
     * success
 As the name suggests error is raised if any error occurs in the library and success on a successful operation.
 
 Events:
-    * error : Triggers the callback with a parameter of type 'error' which has code and desc as its attributes
+    * err : Triggers the callback with a parameter of type 'err' which has code and desc as its attributes
     * success : Triggers the callback whose parameter is a collection of 'Book' objects. Book has 3 attributes
                 * vendor
                 * price

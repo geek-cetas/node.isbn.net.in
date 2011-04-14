@@ -1,6 +1,6 @@
 {
-    "name" : "node.isbn.net.in",
-    "version" : "0.1",
+    "name" : "node.isbn",
+    "version" : "0.1.0",
     "author" : "kailashnath (kailashnathreddy@ymail.com)",
     "description" : "A simple nodejs interface to isbn.net.in",
     "homepage" : "https://github.com/geek-cetas/node.isbn.net.in",
