@@ -118,7 +118,6 @@ lookup.prototype.__parse = parse;
 
 function search(isbn)
 {
-
     var cls = new lookup(isbn);
     return cls;
 }
