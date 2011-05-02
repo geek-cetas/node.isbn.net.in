@@ -1,6 +1,6 @@
 var isbn = require('./isbn');
 
-isbn.lookup('142000280').on('err',
+isbn.lookup('0142000280').on('err',
     function(err) { 
         console.log("ERROR :", err);
      }).on('success',

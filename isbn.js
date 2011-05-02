@@ -1,5 +1,6 @@
-var http = require('http');
-var emitter = require('events').EventEmitter;
+var http = require('http'),
+    emitter = require('events').EventEmitter,
+    inherits = require('sys').inherits;
 
 var options = { host : 'isbn.net.in',
                 path : '/' }
@@ -108,7 +109,7 @@ function lookup(isbn)
     }).on('error', function(e) { $.emit('error', new error(-1, e)); });
 }
 
-lookup.prototype = new emitter;
+inherits(lookup, emitter);
 lookup.prototype.__parse = parse;
 
 function search(isbn)
