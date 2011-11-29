@@ -41,7 +41,8 @@ Books.prototype.cheapest = function() {
     var book;
     for(var i = 0; i < this.books.length; i++)
     {
-        if(book == null) book = this.books[i];
+        if(book == null)
+            book = this.books[i];
         else
         {
             if(book.price > this.books[i].price)
@@ -68,6 +69,8 @@ function parse(data)
     try
     {
         var json = JSON.parse(data.toString());
+        if(json.length === undefined)
+            throw "Invalid json received"
         var books = new Array(json.length);
         for(var i = 0; i < json.length; i++)
         {
@@ -104,6 +107,9 @@ lookup.prototype.__parse = parse;
 function search(isbn)
 {
     var cls = new lookup(isbn);
+    cls.on('error', function (e) {
+            console.log('ERROR: ' + e);
+            })
     return cls;
 }
 
