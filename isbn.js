@@ -1,5 +1,4 @@
-var http = require('http'),
-    emitter = require('events').EventEmitter,
+var emitter = require('events').EventEmitter,
     inherits = require('sys').inherits,
     request = require('request');
 
