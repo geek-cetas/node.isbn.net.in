@@ -1,9 +1,10 @@
-var http = require('http'),
-    emitter = require('events').EventEmitter,
-    inherits = require('sys').inherits;
+var emitter = require('events').EventEmitter,
+    inherits = require('sys').inherits,
+    request = require('request');
 
 var options = { host : 'isbn.net.in',
-                path : '/' }
+                path : '/',
+                url : function() { return 'http://' + this.host + this.path; }}
 
 function error(code, desc)
 {
@@ -39,7 +40,8 @@ Books.prototype.cheapest = function() {
     var book;
     for(var i = 0; i < this.books.length; i++)
     {
-        if(book == null) book = this.books[i];
+        if(book == null)
+            book = this.books[i];
         else
         {
             if(book.price > this.books[i].price)
@@ -66,6 +68,8 @@ function parse(data)
     try
     {
         var json = JSON.parse(data.toString());
+        if(json.length === undefined)
+            throw "Invalid json received"
         var books = new Array(json.length);
         for(var i = 0; i < json.length; i++)
         {
@@ -85,28 +89,15 @@ function lookup(isbn)
     // the appropriate events
     var $ = this;
     options.path = '/' + isbn + '.json';
-    http.get( options, function(res)
-    {
-      var data;
-      if(res.statusCode != 200)
-      {
-        if(res.statusCode == 404)
-          $.emit('err',
-                     new error(res.statusCode, "Invalid isbn : " + isbn));
-        else
-           $.emit('err',
-                    new error(res.statusCode,
-                         "Failed fetching the isbn. Http Error"));
-        return;
-      }
-      res.on('data', function(response) {
-             if(data == null)
-                 data = response;
-             else
-                 data += response;
-     });
-      res.on('end', function() { $.__parse(data); });
-    }).on('error', function(e) { $.emit('error', new error(-1, e)); });
+    console.log(options.url());
+    request( options.url(),
+            function(error, response, body)
+            {
+                if (error != null)
+                    $.emit('error', new error(-1, e));
+                console.log(body);
+                $.__parse(body);
+            });
 }
 
 inherits(lookup, emitter);
@@ -115,6 +106,9 @@ lookup.prototype.__parse = parse;
 function search(isbn)
 {
     var cls = new lookup(isbn);
+    cls.on('error', function (e) {
+            console.log('ERROR: ' + e);
+            })
     return cls;
 }
 
